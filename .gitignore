@@ -52,4 +52,4 @@ Thumbs.db
 
 .vscode/
 
-.bat
+*.bat  # 表示忽略所有.bat结尾的文件
