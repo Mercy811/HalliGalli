@@ -1,3 +1,5 @@
+var Cards = require("./Cards");
+
 const CARD_NUM = 28;
 const TURN_ENUM = {
     player1OffPanel:1,
@@ -5,11 +7,6 @@ const TURN_ENUM = {
     player1:1,
     player2:2
 };
-
-const CARD_TYPE = {
-    
-};
-
 
 var onCards = [[],[],[]];
 var offCards = [[],[],[]];
@@ -29,14 +26,10 @@ cc.Class({
     onLoad: function(){
         console.log("onLoad");
 
-        //发牌
-        for(var i=1;i<=CARD_NUM;i++){
-            cards.push(i);
-        }
-
+        cards = new Cards();
         cards.shuffle();
-        offCards[1] = cards.slice(0,14);
-        offCards[2] = cards.slice(14.28);
+        offCards[1] = cards.content.slice(0,14);
+        offCards[2] = cards.content.slice(14.28);
         //console.log(offCards);
         onCards[1].push(offCards[1].shift());
         onCards[2].push(offCards[2].shift());
@@ -52,11 +45,11 @@ cc.Class({
         var self = this;    //即gameManger节点
 
         //显示第一个，即index为0的图片
-        cc.loader.loadRes(onCards[1][0].toString(), cc.SpriteFrame, function(err,s){
+        cc.loader.loadRes(onCards[1][0].loadName, cc.SpriteFrame, function(err,s){
             var sprite = self.node.parent.children[1].children[0].getComponent(cc.Sprite);
             sprite.spriteFrame = s;
         });
-        cc.loader.loadRes(onCards[2][0].toString(), cc.SpriteFrame, function(err,s){
+        cc.loader.loadRes(onCards[2][0].loadName, cc.SpriteFrame, function(err,s){
             var sprite = self.node.parent.children[2].children[0].getComponent(cc.Sprite);
             sprite.spriteFrame = s;
         });
@@ -129,24 +122,6 @@ cc.Class({
         }
 
     }
-},
-
-
-    /**
-     * Fisher–Yates shuffle
-     */
-    Array.prototype.shuffle = function() {
-        var input = this;
-
-        for (var i = input.length-1; i >=0; i--) {
-
-            var randomIndex = Math.floor(Math.random()*(i+1));
-            var itemAtIndex = input[randomIndex];
-
-            input[randomIndex] = input[i];
-            input[i] = itemAtIndex;
-        }
-        return input;
-    }
+}
 
 );
