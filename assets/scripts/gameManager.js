@@ -28,16 +28,16 @@ cc.Class({
 
         cards = new Cards();
         cards.shuffle();
-        offCards[1] = cards.content.slice(0,14);
-        offCards[2] = cards.content.slice(14.28);
+        offCards[1] = cards.content.slice(0,cards.cardNum/2-1);
+        offCards[2] = cards.content.slice(cards.cardNum/2,cards.cardNum-1);
         //console.log(offCards);
         onCards[1].push(offCards[1].shift());
         onCards[2].push(offCards[2].shift());
         //console.log(onCards);
 
         // 输出，验证是否正确
-        // console.log(onCards);
-        // console.log(offCards);
+        //console.log(onCards);
+        //console.log(offCards);
 
     },
 
@@ -54,7 +54,6 @@ cc.Class({
             sprite.spriteFrame = s;
         });
 
-
         if(offCards[1].length === 0){
             console.log("player1 offCards === 0");
             self.node.parent.children[1].children[1].getComponent(cc.Sprite).spriteFrame = null;
@@ -62,6 +61,12 @@ cc.Class({
         if(offCards[2].length === 0){
             self.node.parent.children[2].children[1].getComponent(cc.Sprite).spriteFrame = null;
         }
+
+        //设置文本框内容
+        self.node.parent.children[1].children[3].getComponent(cc.Label).string = onCards[1].length;
+        self.node.parent.children[1].children[4].getComponent(cc.Label).string = offCards[1].length;
+        self.node.parent.children[2].children[3].getComponent(cc.Label).string = onCards[2].length;
+        self.node.parent.children[2].children[4].getComponent(cc.Label).string = offCards[2].length;
 
         //胜负判断
         if(onCards[1].length === 0 && offCards[1].length === 0){
@@ -81,10 +86,13 @@ cc.Class({
             turn_flag = (turn_flag===1?2:1);
             //console.log(turn_flag);
         }else{
-            console.log("not your turn!");
+            //console.log(this)   //gameManager
+            //console.log(event.target);    //被点击按钮
+            event.target.parent.children[5].getComponent(cc.Label).string = "NOT YOUT NURN!";
+            //console.log("not your turn!");
         }
-        console.log(onCards);
-        console.log(offCards);
+        //console.log(onCards);
+        //console.log(offCards);
     },
 
     ringOn: function(event){

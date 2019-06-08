@@ -23,7 +23,7 @@ function Cards(){
             this.content.push(new Card(TYPE[i],5));
         }
     }
-    console.log(this.content);
+    //console.log(this.content);
 }
 
 Cards.prototype.shuffle = function(){
