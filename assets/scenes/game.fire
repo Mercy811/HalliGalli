@@ -83,9 +83,6 @@
     "_components": [
       {
         "__id__": 43
-      },
-      {
-        "__id__": 44
       }
     ],
     "_prefab": null,
@@ -1890,15 +1887,5 @@
     "_fitWidth": false,
     "_fitHeight": true,
     "_id": "fbG3z1tORLt5rCS4Qvmt89"
-  },
-  {
-    "__type__": "06d4egtXAZEsrkH59boDEYF",
-    "_name": "",
-    "_objFlags": 0,
-    "node": {
-      "__id__": 2
-    },
-    "_enabled": true,
-    "_id": "a34WSqDqBHc76YvSR6HE4O"
   }
 ]

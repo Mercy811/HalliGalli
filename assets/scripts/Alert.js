@@ -129,4 +129,6 @@ Alert.show = function (detailString, enterCallBack, needCancel, animSpeed) {
     };
 };
 
+module.exports = Alert;
+
 

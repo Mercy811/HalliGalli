@@ -1,5 +1,5 @@
 var Cards = require("./Cards");
-
+var Alert = require("./Alert");
 //const CARD_NUM = 28;
 const TURN_ENUM = {
     player1OffPanel: 1,
@@ -178,7 +178,7 @@ cc.Class({
             }
         } else {
             console.log("按铃错误！");
-            //Alert.show("【按铃错误】");
+            Alert.show("【按铃错误】");
             //将按铃玩家的onCards中所有放到未按铃玩家的offCards队尾
             for (; onCards[pushNum].length !== 0;) {
                 offCards[notPushNum].push(onCards[pushNum].shift());
