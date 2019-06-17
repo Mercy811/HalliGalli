@@ -1,6 +1,6 @@
 var Cards = require("./Cards");
 
-const CARD_NUM = 28;
+//const CARD_NUM = 28;
 const TURN_ENUM = {
     player1OffPanel:1,
     player2OffPanel:2,
@@ -89,33 +89,28 @@ cc.Class({
             //console.log(this)   //gameManager
             //console.log(event.target);    //被点击按钮
             event.target.parent.children[5].getComponent(cc.Label).string = "NOT YOUT NURN!";
-            //console.log("not your turn!");
         }
-        //console.log(onCards);
-        //console.log(offCards);
+
     },
 
     ringOn: function(event){
-        //console.log(event.target.parent);
-        //player1 or player2   -> event.target = player1Ring or player2Ring
-        //console.log(this.node);
-        //gameManager
         var pushPlayer = event.target.parent;
         var notPushPlayer = (event.target.parent===event.target.parent.parent.children[1]?event.target.parent.parent.children[2]:event.target.parent.parent.children[1]);
         var pushNum = TURN_ENUM[pushPlayer.name];
         var notPushNum = TURN_ENUM[notPushPlayer.name];
+
+
+        //**基础玩法**按铃时机：
+        //1. 当出现5个相同的水果时
+
         //判断当前牌面的是否相加为5
-
-        var player1OnCard = parseInt(pushPlayer.parent.children[1].children[0].getComponent(cc.Sprite).spriteFrame.name);
-        var player2OnCard = parseInt(pushPlayer.parent.children[2].children[0].getComponent(cc.Sprite).spriteFrame.name);
-        //console.log(player1OnCard+player2OnCard);
-        //console.log(onCards[TURN_ENUM[notPushPlayer.name]]);  
-        if(player1OnCard+player2OnCard===0 || player1OnCard+player2OnCard===13){ //按正确
-
+        if(onCards[1][0].point + onCards[2][0].point === 5 && onCards[1][0].type === onCards[2][0].type ){
             console.log(pushPlayer.name+" right!");
             //如果没按的玩家的onCards不为0，则把这些牌放到按的玩家的offCards中
-            offCards[pushNum].push(onCards[notPushNum].shift());
-
+            for(;onCards[notPushNum].length!==0;){
+                offCards[pushNum].push(onCards[notPushNum].shift());
+            }
+            onCards[notPushNum].push(offCards[notPushNum].shift());
         }else{ //按错
             console.log(pushPlayer.name+" wrong!");
             if(offCards[pushNum].length !== 0){
@@ -124,9 +119,29 @@ cc.Class({
             }else{
                 offCards[notPushNum].push(onCards[pushNum].shift());
             }
+        }
 
-            console.log(onCards);
-            console.log(offCards);
+        //**扩展玩法**按铃时机：
+        //1. 当出现两张相同的水果牌
+        //2. 出现大象，且没有草莓
+        //3. 出现猴子，且没有柠檬
+        //4. 出现猪
+
+        //两张相同的水果牌
+        if(onCards[1][0].type==="fruit" && onCards[1][0].loadName===onCards[2][0].loadName){
+            console.log("两张相同的水果牌！");
+        }
+        //豬
+        if(onCards[1][0].type==="pig" || onCards[2][0].type==="pig"){
+            console.log("猪！");
+        }
+        //猴子，无柠檬
+        if((onCards[1][0].type==="monkey" && parseInt(onCards[2][0].loadName)%10===0) || (onCards[2][0].type==="monkey" && parseInt(onCards[1][0].loadName)%10===0)){
+            console.log("猴子无柠檬！");
+        }
+        //大象，无草莓
+        if((onCards[1][0].type==="elephant" && parseInt(onCards[2][0].loadName)/1000===0) || (onCards[2][0].type==="elepahnt" && parseInt(onCards[1][0].loadName)/1000===0)){
+            console.log("大象无草莓！");
         }
 
     }
